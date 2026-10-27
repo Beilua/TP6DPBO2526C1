@@ -37,6 +37,7 @@ public class Logic implements ActionListener, KeyListener {
     Clip jumpSound;
     Clip scoreSound;
     Clip gameOverSound;
+    Clip bgm;
 
     View view;
     Image birdImage;
@@ -68,6 +69,7 @@ public class Logic implements ActionListener, KeyListener {
         gameLoop.start();
 
         loadSounds();
+        playBGM();
     }
 
     public void setView(View view){
@@ -110,6 +112,7 @@ public class Logic implements ActionListener, KeyListener {
             jumpSound = getClip("sounds/sfx_jump.wav");
             scoreSound = getClip("sounds/sfx_coin.wav");
             gameOverSound = getClip("sounds/sfx_disappear.wav");
+            bgm = getClip("sounds/garden.wav");
         } catch(Exception e){
             System.out.println("Failed to load sounds: " + e.getMessage());
         }
@@ -130,6 +133,13 @@ public class Logic implements ActionListener, KeyListener {
         if(clip != null){
             clip.setFramePosition(0);
             clip.start();
+        }
+    }
+
+    private void playBGM(){
+        if(bgm != null){
+            bgm.setFramePosition(0);
+            bgm.loop(Clip.LOOP_CONTINUOUSLY);
         }
     }
 
@@ -171,6 +181,9 @@ public class Logic implements ActionListener, KeyListener {
             gameLoop.stop();
             pipesCooldown.stop();
             playSound(gameOverSound);
+            if(bgm != null){
+                bgm.stop();
+            }
             if(view != null){
                 view.paintImmediately(0, 0, frameWidth, frameHeight);
             }
@@ -186,6 +199,9 @@ public class Logic implements ActionListener, KeyListener {
                 gameLoop.stop();
                 pipesCooldown.stop();
                 playSound(gameOverSound);
+                if(bgm != null){
+                    bgm.stop();
+                }
                 if(view != null){
                     view.paintImmediately(0, 0, frameWidth, frameHeight);
                 }
@@ -259,6 +275,9 @@ public class Logic implements ActionListener, KeyListener {
         if(view != null){
             view.repaint();
         }
+
+        // Restart BGM loop on restart
+        playBGM();
     }
 
     @Override
