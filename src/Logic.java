@@ -28,6 +28,7 @@ public class Logic implements ActionListener, KeyListener {
     int gravity = 1;
 
     boolean gameOver = false;
+    boolean gameStarted = false;
     int score = 0;
 
     View view;
@@ -76,6 +77,10 @@ public class Logic implements ActionListener, KeyListener {
         return gameOver;
     }
 
+    public boolean isGameStarted(){
+        return gameStarted;
+    }
+
     public int getScore(){
         return score;
     }
@@ -100,7 +105,7 @@ public class Logic implements ActionListener, KeyListener {
     }
 
     public void move(){
-        if(gameOver){
+        if(!gameStarted || gameOver){
             return;
         }
 
@@ -162,6 +167,15 @@ public class Logic implements ActionListener, KeyListener {
             return;
         }
 
+        if(!gameStarted){
+            if(e.getKeyCode() == KeyEvent.VK_SPACE){
+                gameStarted = true;
+            } else if(e.getKeyCode() == KeyEvent.VK_Q){
+                System.exit(0);
+            }
+            return;
+        }
+
         if(e.getKeyCode() == KeyEvent.VK_SPACE){
             player.setVelocityY(-10);
         }
@@ -169,6 +183,7 @@ public class Logic implements ActionListener, KeyListener {
 
     public void restartGame(){
         gameOver = false;
+        gameStarted = true;
         score = 0;
         player.setPosX(playerStartPosX);
         player.setPosY(playerStartPosY);

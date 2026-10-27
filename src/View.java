@@ -60,6 +60,22 @@ public class View extends JPanel {
             String restartMsg = "Press R to restart";
             int restartWidth = g.getFontMetrics().stringWidth(restartMsg);
             g.drawString(restartMsg, (width - restartWidth) / 2, height / 2 + 40);
+        } else if(!logic.isGameStarted()){
+            // Main menu
+            g.setColor(Color.black);
+            g.setFont(new Font("Arial", Font.BOLD, 40));
+            String title = "FLAPPY BIRD";
+            int titleWidth = g.getFontMetrics().stringWidth(title);
+            g.drawString(title, (width - titleWidth) / 2, height / 2 - 60);
+
+            g.setFont(new Font("Arial", Font.PLAIN, 24));
+            String startMsg = "Press SPACE to start";
+            int startWidth = g.getFontMetrics().stringWidth(startMsg);
+            g.drawString(startMsg, (width - startWidth) / 2, height / 2);
+
+            String quitMsg = "Press Q to quit";
+            int quitWidth = g.getFontMetrics().stringWidth(quitMsg);
+            g.drawString(quitMsg, (width - quitWidth) / 2, height / 2 + 40);
         }
 
         // Keep score label in sync
