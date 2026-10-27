@@ -41,6 +41,9 @@ public class Logic implements ActionListener, KeyListener {
 
     View view;
     Image birdImage;
+    Image charJumpImage;
+    Image charFallImage;
+    Image backgroundImage;
     Player player;
 
     // Tambahkan list pipa dan gambarnya
@@ -50,7 +53,10 @@ public class Logic implements ActionListener, KeyListener {
 
     public Logic(){
         birdImage = new ImageIcon(getClass().getResource("assets/bird.png")).getImage();
-        player = new Player(playerStartPosX, playerStartPosY, playerWidth, playerHeight, birdImage);
+        charJumpImage = new ImageIcon(getClass().getResource("assets/charJump.png")).getImage();
+        charFallImage = new ImageIcon(getClass().getResource("assets/charFall.png")).getImage();
+        backgroundImage = new ImageIcon(getClass().getResource("assets/background.png")).getImage();
+        player = new Player(playerStartPosX, playerStartPosY, playerWidth, playerHeight, charFallImage);
 
         lowerPipeImage = new ImageIcon(getClass().getResource("assets/lowerPipe.png")).getImage();
         upperPipeImage = new ImageIcon(getClass().getResource("assets/upperPipe.png")).getImage();
@@ -78,6 +84,10 @@ public class Logic implements ActionListener, KeyListener {
 
     public Player getPlayer(){
         return player;
+    }
+
+    public Image getBackgroundImage(){
+        return backgroundImage;
     }
 
     public ArrayList<Pipe> getPipes(){
@@ -160,6 +170,13 @@ public class Logic implements ActionListener, KeyListener {
         player.setPosY(player.getPosY() + player.getVelocityY());
         player.setPosY(Math.max(player.getPosY(), 0));
 
+        // Switch character sprite based on vertical movement
+        if (player.getVelocityY() < 0) {
+            player.setImage(charJumpImage);
+        } else {
+            player.setImage(charFallImage);
+        }
+
         for(int i = 0; i < pipes.size(); i++){
             Pipe pipe = pipes.get(i);
             pipe.setPosX(pipe.getPosX() + pipeVelocityX);
@@ -236,6 +253,7 @@ public class Logic implements ActionListener, KeyListener {
 
         if(e.getKeyCode() == KeyEvent.VK_SPACE){
             player.setVelocityY(-10);
+            player.setImage(charJumpImage);
             playSound(jumpSound);
         }
     }

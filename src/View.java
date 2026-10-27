@@ -36,6 +36,11 @@ public class View extends JPanel {
     }
 
     public void draw(Graphics g){
+        Image background = logic.getBackgroundImage();
+        if(background != null){
+            g.drawImage(background, 0, 0, width, height, null);
+        }
+
         Player player = logic.getPlayer();
         if(player != null){
             g.drawImage(player.getImage(), player.getPosX(), player.getPosY(), player.getWidth(), player.getHeight(), null);
