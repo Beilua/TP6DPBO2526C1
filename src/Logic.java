@@ -116,7 +116,7 @@ public class Logic implements ActionListener, KeyListener {
         // Increment score when bird passes through a pipe gap (count once per pair)
         for(int i = 0; i < pipes.size(); i++){
             Pipe pipe = pipes.get(i);
-            if(!pipe.isPassed() && pipe.getPosY() < frameHeight / 2 && pipe.getPosX() + pipe.getWidth() <= player.getPosX()){
+            if(!pipe.isPassed() && pipe.getPosY() < 0 && pipe.getPosX() + pipe.getWidth() <= player.getPosX()){
                 score++;
                 pipe.setPassed(true);
             }
