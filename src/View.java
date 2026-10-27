@@ -39,5 +39,18 @@ public class View extends JPanel {
                 g.drawImage(pipe.getImage(), pipe.getPosX(), pipe.getPosY(), pipe.getWidth(), pipe.getHeight(), null);
             }
         }
+
+        if(logic.isGameOver()){
+            g.setColor(Color.black);
+            g.setFont(new Font("Arial", Font.BOLD, 40));
+            String msg = "GAME OVER";
+            int msgWidth = g.getFontMetrics().stringWidth(msg);
+            g.drawString(msg, (width - msgWidth) / 2, height / 2 - 20);
+
+            g.setFont(new Font("Arial", Font.PLAIN, 24));
+            String restartMsg = "Press R to restart";
+            int restartWidth = g.getFontMetrics().stringWidth(restartMsg);
+            g.drawString(restartMsg, (width - restartWidth) / 2, height / 2 + 40);
+        }
     }
 }
