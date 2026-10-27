@@ -170,6 +170,8 @@ public class Logic implements ActionListener, KeyListener {
         if(!gameStarted){
             if(e.getKeyCode() == KeyEvent.VK_SPACE){
                 gameStarted = true;
+                pipes.clear();
+                placePipes();
             } else if(e.getKeyCode() == KeyEvent.VK_Q){
                 System.exit(0);
             }
@@ -191,6 +193,14 @@ public class Logic implements ActionListener, KeyListener {
 
         pipes.clear();
 
+        // Stop old timers before replacing them
+        if(gameLoop != null){
+            gameLoop.stop();
+        }
+        if(pipesCooldown != null){
+            pipesCooldown.stop();
+        }
+
         gameLoop = new Timer(1000/60, this);
         gameLoop.start();
 
@@ -201,6 +211,9 @@ public class Logic implements ActionListener, KeyListener {
             }
         });
         pipesCooldown.start();
+
+        // Spawn a pipe pair immediately on restart
+        placePipes();
 
         if(view != null){
             view.repaint();
