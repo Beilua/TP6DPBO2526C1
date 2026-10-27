@@ -5,6 +5,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
 import java.awt.Rectangle;
+import javax.sound.sampled.*;
+import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class Logic implements ActionListener, KeyListener {
@@ -30,6 +33,10 @@ public class Logic implements ActionListener, KeyListener {
     boolean gameOver = false;
     boolean gameStarted = false;
     int score = 0;
+
+    Clip jumpSound;
+    Clip scoreSound;
+    Clip gameOverSound;
 
     View view;
     Image birdImage;
@@ -59,6 +66,8 @@ public class Logic implements ActionListener, KeyListener {
 
         gameLoop = new Timer(1000/60, this);
         gameLoop.start();
+
+        loadSounds();
     }
 
     public void setView(View view){
@@ -96,6 +105,34 @@ public class Logic implements ActionListener, KeyListener {
         pipes.add(lowerPipe);
     }
 
+    private void loadSounds(){
+        try{
+            jumpSound = getClip("sounds/sfx_jump.wav");
+            scoreSound = getClip("sounds/sfx_coin.wav");
+            gameOverSound = getClip("sounds/sfx_disappear.wav");
+        } catch(Exception e){
+            System.out.println("Failed to load sounds: " + e.getMessage());
+        }
+    }
+
+    private Clip getClip(String path) throws Exception{
+        URL url = getClass().getResource(path);
+        if (url == null) {
+            throw new Exception("Sound resource not found: " + path);
+        }
+        AudioInputStream audioStream = AudioSystem.getAudioInputStream(url);
+        Clip clip = AudioSystem.getClip();
+        clip.open(audioStream);
+        return clip;
+    }
+
+    private void playSound(Clip clip){
+        if(clip != null){
+            clip.setFramePosition(0);
+            clip.start();
+        }
+    }
+
     @Override
     public void actionPerformed(ActionEvent e){
         move();
@@ -124,6 +161,7 @@ public class Logic implements ActionListener, KeyListener {
             if(!pipe.isPassed() && pipe.getPosY() < 0 && pipe.getPosX() + pipe.getWidth() <= player.getPosX()){
                 score++;
                 pipe.setPassed(true);
+                playSound(scoreSound);
             }
         }
 
@@ -132,6 +170,7 @@ public class Logic implements ActionListener, KeyListener {
             gameOver = true;
             gameLoop.stop();
             pipesCooldown.stop();
+            playSound(gameOverSound);
             if(view != null){
                 view.paintImmediately(0, 0, frameWidth, frameHeight);
             }
@@ -146,6 +185,7 @@ public class Logic implements ActionListener, KeyListener {
                 gameOver = true;
                 gameLoop.stop();
                 pipesCooldown.stop();
+                playSound(gameOverSound);
                 if(view != null){
                     view.paintImmediately(0, 0, frameWidth, frameHeight);
                 }
@@ -180,6 +220,7 @@ public class Logic implements ActionListener, KeyListener {
 
         if(e.getKeyCode() == KeyEvent.VK_SPACE){
             player.setVelocityY(-10);
+            playSound(jumpSound);
         }
     }
 
