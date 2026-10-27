@@ -7,7 +7,6 @@ public class App {
         frame.setSize(360, 640);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
-
         Logic logika = new Logic();
         View tampilan = new View(logika); //supaya view bisa komunikasi dengan logic
         logika.setView(tampilan);

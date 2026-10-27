@@ -8,11 +8,20 @@ public class View extends JPanel {
     int height = 640;
 
     private Logic logic;
+    private JLabel scoreLabel;
 
     public View(Logic logic) {
         this.logic = logic;
         setPreferredSize(new Dimension(width, height));
         setBackground(Color.cyan);
+        setLayout(null);
+
+        // Score label in top-left corner
+        scoreLabel = new JLabel("Score: 0");
+        scoreLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        scoreLabel.setForeground(Color.black);
+        scoreLabel.setBounds(10, 10, 150, 30);
+        add(scoreLabel);
 
         // Tambahkan fokus dan Key Listener
         // Untuk menerima input
@@ -52,5 +61,8 @@ public class View extends JPanel {
             int restartWidth = g.getFontMetrics().stringWidth(restartMsg);
             g.drawString(restartMsg, (width - restartWidth) / 2, height / 2 + 40);
         }
+
+        // Keep score label in sync
+        scoreLabel.setText("Score: " + logic.getScore());
     }
 }

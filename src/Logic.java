@@ -28,6 +28,7 @@ public class Logic implements ActionListener, KeyListener {
     int gravity = 1;
 
     boolean gameOver = false;
+    int score = 0;
 
     View view;
     Image birdImage;
@@ -75,6 +76,10 @@ public class Logic implements ActionListener, KeyListener {
         return gameOver;
     }
 
+    public int getScore(){
+        return score;
+    }
+
     public void placePipes(){
         int randomPosY = (int) (pipeStartPosY - (pipeHeight / 4) - Math.random() * (pipeHeight / 2));
         int openingSpace = frameHeight / 4;
@@ -106,6 +111,15 @@ public class Logic implements ActionListener, KeyListener {
         for(int i = 0; i < pipes.size(); i++){
             Pipe pipe = pipes.get(i);
             pipe.setPosX(pipe.getPosX() + pipeVelocityX);
+        }
+
+        // Increment score when bird passes through a pipe gap (count once per pair)
+        for(int i = 0; i < pipes.size(); i++){
+            Pipe pipe = pipes.get(i);
+            if(!pipe.isPassed() && pipe.getPosY() < frameHeight / 2 && pipe.getPosX() + pipe.getWidth() <= player.getPosX()){
+                score++;
+                pipe.setPassed(true);
+            }
         }
 
         // Game over jika menyentuh bagian bawah layar
@@ -155,6 +169,7 @@ public class Logic implements ActionListener, KeyListener {
 
     public void restartGame(){
         gameOver = false;
+        score = 0;
         player.setPosX(playerStartPosX);
         player.setPosY(playerStartPosY);
         player.setVelocityY(0);
