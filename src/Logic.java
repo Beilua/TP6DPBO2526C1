@@ -16,8 +16,8 @@ public class Logic implements ActionListener, KeyListener {
 
     int playerStartPosX = frameWidth / 2;
     int playerStartPosY = frameHeight / 2;
-    int playerWidth = 34;
-    int playerHeight = 24;
+    int playerWidth = 64;
+    int playerHeight = 48;
 
     // Tambahkan atribut posisi dan ukuran pipa
     int pipeStartPosX = frameWidth;
@@ -108,7 +108,7 @@ public class Logic implements ActionListener, KeyListener {
 
     public void placePipes(){
         int randomPosY = (int) (pipeStartPosY - (pipeHeight / 4) - Math.random() * (pipeHeight / 2));
-        int openingSpace = frameHeight / 4;
+        int openingSpace = 220;
 
         Pipe upperPipe = new Pipe(pipeStartPosX, randomPosY, pipeWidth, pipeHeight, upperPipeImage);
         pipes.add(upperPipe);
