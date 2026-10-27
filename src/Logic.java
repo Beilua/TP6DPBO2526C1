@@ -113,6 +113,9 @@ public class Logic implements ActionListener, KeyListener {
             gameOver = true;
             gameLoop.stop();
             pipesCooldown.stop();
+            if(view != null){
+                view.paintImmediately(0, 0, frameWidth, frameHeight);
+            }
         }
 
         // Game over jika menabrak pipa
@@ -124,6 +127,9 @@ public class Logic implements ActionListener, KeyListener {
                 gameOver = true;
                 gameLoop.stop();
                 pipesCooldown.stop();
+                if(view != null){
+                    view.paintImmediately(0, 0, frameWidth, frameHeight);
+                }
                 break;
             }
         }
