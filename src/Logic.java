@@ -17,10 +17,12 @@ public class Logic implements ActionListener, KeyListener {
     int frameHeight = 640;
 
     // player starting position and size
-    int playerStartPosX = frameWidth / 2;
-    int playerStartPosY = frameHeight / 2;
     int playerWidth = 64;
     int playerHeight = 48;
+
+    // center the alien horizontally so its sprite middle aligns with frame center
+    int playerStartPosX = (frameWidth - playerWidth) / 2;
+    int playerStartPosY = frameHeight / 2;
 
     // pipe position size and velocity attributes
     int pipeStartPosX = frameWidth;
