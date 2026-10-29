@@ -247,10 +247,19 @@ public class Logic implements ActionListener, KeyListener {
         }
 
         // end game if player collides with a pipe
-        Rectangle playerRect = new Rectangle(player.getPosX(), player.getPosY(), player.getWidth(), player.getHeight());
+        // shrink hitboxes slightly so a near-miss visually doesn't trigger game over
+        Rectangle playerRect = new Rectangle(
+                player.getPosX() + 6,
+                player.getPosY() + 6,
+                player.getWidth() - 12,
+                player.getHeight() - 12);
         for(int i = 0; i < pipes.size(); i++){
             Pipe pipe = pipes.get(i);
-            Rectangle pipeRect = new Rectangle(pipe.getPosX(), pipe.getPosY(), pipe.getWidth(), pipe.getHeight());
+            Rectangle pipeRect = new Rectangle(
+                    pipe.getPosX() + 4,
+                    pipe.getPosY() + 4,
+                    pipe.getWidth() - 8,
+                    pipe.getHeight() - 8);
             if(playerRect.intersects(pipeRect)){
                 gameOver = true;
                 gameLoop.stop();
