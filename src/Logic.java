@@ -247,6 +247,10 @@ public class Logic implements ActionListener, KeyListener {
                 gameStarted = true;
                 pipes.clear();
                 placePipes();
+                // Reset cooldown so the next pipe spawns a full 1500ms after
+                // the game starts, rather than at some leftover phase from
+                // app launch (which would place pipes too close together).
+                pipesCooldown.restart();
             } else if(e.getKeyCode() == KeyEvent.VK_Q){
                 System.exit(0);
             }
