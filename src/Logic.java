@@ -236,6 +236,8 @@ public class Logic implements ActionListener, KeyListener {
         if(gameOver){
             if(e.getKeyCode() == KeyEvent.VK_R){
                 restartGame();
+            } else if(e.getKeyCode() == KeyEvent.VK_Q){
+                System.exit(0);
             }
             return;
         }

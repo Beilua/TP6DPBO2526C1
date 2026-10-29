@@ -1,11 +1,46 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 public class View extends JPanel {
 
     int width = 360;
     int height = 640;
+
+    private static Font baseFont;
+
+    static {
+        try (InputStream is = View.class.getResourceAsStream("/fonts/MatchaWorld.ttf")) {
+            if (is != null) {
+                baseFont = Font.createFont(Font.TRUETYPE_FONT, is);
+            } else {
+                baseFont = new Font("Arial", Font.BOLD, 1);
+            }
+        } catch (Exception e) {
+            baseFont = new Font("Arial", Font.BOLD, 1);
+        }
+    }
+
+    private Font getFont(int size, int style) {
+        return baseFont.deriveFont(style, (float) size);
+    }
+
+    // Draws white text with a chunky outline, matching the other game assets
+    private void drawOutlinedString(Graphics2D g2, String text, int x, int y) {
+        int offset = 2;
+        // Chunky outline color
+        g2.setColor(new Color(72, 36, 92));
+        for (int dx = -offset; dx <= offset; dx++) {
+            for (int dy = -offset; dy <= offset; dy++) {
+                if (dx == 0 && dy == 0) continue;
+                g2.drawString(text, x + dx, y + dy);
+            }
+        }
+        // White text on top
+        g2.setColor(Color.white);
+        g2.drawString(text, x, y);
+    }
 
     private Logic logic;
     private JLabel scoreLabel;
@@ -16,10 +51,10 @@ public class View extends JPanel {
         setBackground(Color.cyan);
         setLayout(null);
 
-        // Score label in top-left corner
+        // Score label in top-left corner (kept as JLabel, black text)
         scoreLabel = new JLabel("Score: 0");
-        scoreLabel.setFont(new Font("Arial", Font.BOLD, 24));
-        scoreLabel.setForeground(Color.black);
+        scoreLabel.setFont(getFont(24, Font.BOLD));
+        scoreLabel.setForeground(new Color(165, 81, 213));
         scoreLabel.setBounds(10, 10, 150, 30);
         add(scoreLabel);
 
@@ -54,33 +89,37 @@ public class View extends JPanel {
             }
         }
 
+        Graphics2D g2 = (Graphics2D) g;
+
         if(logic.isGameOver()){
-            g.setColor(Color.black);
-            g.setFont(new Font("Arial", Font.BOLD, 40));
+            g2.setFont(getFont(40, Font.BOLD));
             String msg = "GAME OVER";
-            int msgWidth = g.getFontMetrics().stringWidth(msg);
-            g.drawString(msg, (width - msgWidth) / 2, height / 2 - 20);
+            int msgWidth = g2.getFontMetrics().stringWidth(msg);
+            drawOutlinedString(g2, msg, (width - msgWidth) / 2, height / 2 - 20);
 
-            g.setFont(new Font("Arial", Font.PLAIN, 24));
+            g2.setFont(getFont(24, Font.PLAIN));
             String restartMsg = "Press R to restart";
-            int restartWidth = g.getFontMetrics().stringWidth(restartMsg);
-            g.drawString(restartMsg, (width - restartWidth) / 2, height / 2 + 40);
-        } else if(!logic.isGameStarted()){
-            // Main menu
-            g.setColor(Color.black);
-            g.setFont(new Font("Arial", Font.BOLD, 40));
-            String title = "FLAPPY BIRD";
-            int titleWidth = g.getFontMetrics().stringWidth(title);
-            g.drawString(title, (width - titleWidth) / 2, height / 2 - 60);
-
-            g.setFont(new Font("Arial", Font.PLAIN, 24));
-            String startMsg = "Press SPACE to start";
-            int startWidth = g.getFontMetrics().stringWidth(startMsg);
-            g.drawString(startMsg, (width - startWidth) / 2, height / 2);
+            int restartWidth = g2.getFontMetrics().stringWidth(restartMsg);
+            drawOutlinedString(g2, restartMsg, (width - restartWidth) / 2, height / 2 + 40);
 
             String quitMsg = "Press Q to quit";
-            int quitWidth = g.getFontMetrics().stringWidth(quitMsg);
-            g.drawString(quitMsg, (width - quitWidth) / 2, height / 2 + 40);
+            int quitWidth = g2.getFontMetrics().stringWidth(quitMsg);
+            drawOutlinedString(g2, quitMsg, (width - quitWidth) / 2, height / 2 + 80);
+        } else if(!logic.isGameStarted()){
+            // Main menu
+            g2.setFont(getFont(40, Font.BOLD));
+            String title = "FLAPPY ALIEN";
+            int titleWidth = g2.getFontMetrics().stringWidth(title);
+            drawOutlinedString(g2, title, (width - titleWidth) / 2, height / 2 - 60);
+
+            g2.setFont(getFont(24, Font.PLAIN));
+            String startMsg = "Press SPACE to start";
+            int startWidth = g2.getFontMetrics().stringWidth(startMsg);
+            drawOutlinedString(g2, startMsg, (width - startWidth) / 2, height / 2);
+
+            String quitMsg = "Press Q to quit";
+            int quitWidth = g2.getFontMetrics().stringWidth(quitMsg);
+            drawOutlinedString(g2, quitMsg, (width - quitWidth) / 2, height / 2 + 40);
         }
 
         // Keep score label in sync
