@@ -95,4 +95,4 @@ TP6DPBO2526C1/
 8. Semua aset (gambar, font, suara) dimuat dari `src/assets`, `src/fonts`, dan `src/sounds` sebagai resource aplikasi.
 
 ## Dokumentasi Saat Program Dijalankan
-[Gameplay](https://github.com/Beilua/TP6DPBO2526C1/blob/main/Documentation/gameplay-demo.mp4)
+[Gameplay](https://github.com/user-attachments/assets/0c62653c-bfac-4578-abd9-b702c8e9a6c1)
