@@ -1,6 +1,8 @@
 import java.awt.*;
 
+// class to represent the player character in the game
 public class Player {
+    // player position size image and velocity attributes
     private int posX;
     private int posY;
     private int width;
@@ -8,6 +10,7 @@ public class Player {
     private Image image;
     private int velocityY = -0;
 
+    // constructor to initialize player attributes
     public Player(int posX, int posY, int width, int height, Image image){
         this.posX = posX;
         this.posY = posY;
@@ -15,9 +18,11 @@ public class Player {
         this.height = height;
         this.image = image;
 
+        // initial velocity is zero
         this.velocityY = -0;
     }
 
+    // getter and setter for horizontal position
     public int getPosX() {
         return posX;
     }
@@ -26,6 +31,7 @@ public class Player {
         this.posX = posX;
     }
 
+    // getter and setter for vertical position
     public int getPosY() {
         return posY;
     }
@@ -34,6 +40,7 @@ public class Player {
         this.posY = posY;
     }
 
+    // getter and setter for width
     public int getWidth() {
         return width;
     }
@@ -42,6 +49,7 @@ public class Player {
         this.width = width;
     }
 
+    // getter and setter for height
     public int getHeight() {
         return height;
     }
@@ -50,6 +58,7 @@ public class Player {
         this.height = height;
     }
 
+    // getter and setter for image
     public Image getImage() {
         return image;
     }
@@ -58,6 +67,7 @@ public class Player {
         this.image = image;
     }
 
+    // getter and setter for vertical velocity
     public int getVelocityY() {
         return velocityY;
     }

@@ -1,14 +1,18 @@
 import java.awt.*;
 
+// class to represent a pipe obstacle in the game
 public class Pipe {
+    // pipe position and size attributes
     private int posX;
     private int posY;
     private int width;
     private int height;
     private Image image;
     private int velocityX;
+    // flag to check if player has passed the pipe
     boolean passed;
 
+    // constructor to initialize pipe attributes
     public Pipe(int posX, int posY, int width, int height, Image image) {
         this.posX = posX;
         this.posY = posY;
@@ -16,10 +20,13 @@ public class Pipe {
         this.height = height;
         this.image = image;
 
+        // initial velocity is zero
         this.velocityX = 0;
+        // pipe is not passed yet
         this.passed = false;
     }
 
+    // getter and setter for horizontal position
     public int getPosX() {
         return posX;
     }
@@ -28,6 +35,7 @@ public class Pipe {
         this.posX = posX;
     }
 
+    // getter and setter for vertical position
     public int getPosY() {
         return posY;
     }
@@ -36,6 +44,7 @@ public class Pipe {
         this.posY = posY;
     }
 
+    // getter and setter for width
     public int getWidth() {
         return width;
     }
@@ -44,6 +53,7 @@ public class Pipe {
         this.width = width;
     }
 
+    // getter and setter for height
     public int getHeight() {
         return height;
     }
@@ -52,6 +62,7 @@ public class Pipe {
         this.height = height;
     }
 
+    // getter and setter for image
     public Image getImage() {
         return image;
     }
@@ -60,6 +71,7 @@ public class Pipe {
         this.image = image;
     }
 
+    // getter and setter for horizontal velocity
     public int getVelocityX() {
         return velocityX;
     }
@@ -68,6 +80,7 @@ public class Pipe {
         this.velocityX = velocityX;
     }
 
+    // getter and setter for passed flag
     public boolean isPassed() {
         return passed;
     }
